@@ -1,9 +1,9 @@
 module.exports = function(grunt){
 
 	grunt.initConfig({
-    htmlmin: {                                     // Task
-      dist: {                                      // Target
-        options: {                                 // Target options
+    htmlmin: {
+      dist: {
+        options: {
           removeComments: true,
           collapseWhitespace: true
         },
@@ -31,18 +31,24 @@ module.exports = function(grunt){
 		},
 
     uglify: {
-      options: {
-        preserveComments: 'some',
-        report: false
-      },
-      my_target: {
-        files: [{
-          expand: true,
-          cwd: '4_JS/',
-          src: ['*.js'],
-          dest: '9_DIST/js'
-        }]
-      }
+			options: {
+				preserveComments: false,
+				report: 'min',
+				screwIE8: true,
+			},
+			js: {
+				options: {
+					preserveComments: false,
+					report: 'min',
+					screwIE8: true,
+				},
+				files: [{
+					expand: true,
+					cwd: '4_JS/',
+					src: ['*.js'],
+					dest: '9_DIST/js'
+				}],
+			},
     },
 
 		concat: {
@@ -104,7 +110,7 @@ module.exports = function(grunt){
     watch: {
       html: {
         files: ['1_HTML/*'],
-        tasks: ['newer:htmlmin'],
+        tasks: ['htmlmin'],
         options: {
           spawn: false,
           livereload: true,
@@ -112,7 +118,7 @@ module.exports = function(grunt){
       },
       css: {
         files: ['2_CSS/*'],
-        tasks: ['newer:cssmin','newer:concat:css'],
+        tasks: ['cssmin','concat:css'],
         options: {
           spawn: false,
           livereload: true,
@@ -128,7 +134,7 @@ module.exports = function(grunt){
       },
       js: {
         files: ['4_JS/*'],
-        tasks: ['newer:uglify','newer:concat:js'],
+        tasks: ['uglify','concat:js'],
         options: {
           spawn: false,
           livereload: true,
@@ -146,5 +152,5 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['newer:htmlmin','newer:cssmin','newer:uglify','newer:concat:css','newer:concat:js','newer:responsive_images','connect','watch']);
+	grunt.registerTask('default', ['htmlmin','cssmin','uglify','concat:css','concat:js','newer:responsive_images','connect','watch']);
 };

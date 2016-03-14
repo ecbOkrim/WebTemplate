@@ -1,4 +1,2 @@
-function world(){
-  var lol = 5*5;
-  window.alert('hey' + lol);
-}
+var lol = 5*5+2;
+console.log('hey' + lol)
